@@ -8,92 +8,11 @@ const diagnosticHost = {
   getNewLine: () => ts.sys.newLine,
 };
 
-const embeddedParsers = [
-  {
-    test: /\.vue$/,
-    parse(fileName, sourceText) {
-      let script;
-
-      try {
-        const compiler = require("@vue/compiler-sfc");
-
-        const { descriptor } = compiler.parse(sourceText, {
-          pad: "space",
-        });
-
-        if (descriptor.script) {
-          const {
-            script: { loc, lang, src },
-          } = descriptor;
-
-          const start = loc.start.offset;
-          const end = loc.end.offset;
-
-          script = { end, lang, src, start };
-        }
-      } catch {
-        const compiler = require("vue-template-compiler");
-
-        const parsed = compiler.parseComponent(sourceText, {
-          pad: "space",
-        });
-
-        script = parsed.script;
-      }
-
-      return (
-        script && {
-          content: getEmbededContent(sourceText, script),
-          extension: getExtensionByLang(script.lang),
-          fileName,
-        }
-      );
-    },
-  },
-];
-
-const getExtensionByLang = (lang) => {
-  if (typeof lang === "string") {
-    lang = lang.toLowerCase();
-  }
-
-  switch (lang) {
-    case "ts":
-      return ".ts";
-
-    case "tsx":
-      return ".tsx";
-
-    case "jsx":
-      return ".jsx";
-  }
-
-  return ".js";
-};
-
-const getEmbededContent = (sourceText, { end, src, start }) => {
-  if (src) {
-    src = src.replace(/\.tsx?$/i, "");
-
-    const lines = [
-      `export { default } from "${src}";`,
-      `export * from "${src}";`,
-    ];
-
-    return lines.join(ts.sys.newLine);
-  }
-
-  return (
-    Array(sourceText.slice(0, start).split(/\r?\n/g).length).join(
-      ts.sys.newLine
-    ) + sourceText.slice(start, end)
-  );
-};
-
 class TypescriptPlugin {
   constructor(options = {}) {
     this.options = {
       configFile: "tsconfig.json",
+      embeddedParsers: [],
       ...options,
     };
   }
@@ -140,7 +59,7 @@ class TypescriptPlugin {
         if (fileExists(embeddedFileName)) {
           const embeddedSource = getEmbeddedSource(embeddedFileName);
 
-          if (embeddedSource.extension === extension) {
+          if (embeddedSource && embeddedSource.extension === extension) {
             return embeddedSource;
           }
         }
@@ -153,8 +72,8 @@ class TypescriptPlugin {
       const getEmbeddedSource = (fileName) => {
         let source = embeddedSources.get(fileName);
 
-        if (source == null) {
-          const parser = embeddedParsers.find((parser) =>
+        if (typeof source === "undefined") {
+          const parser = this.options.embeddedParsers.find((parser) =>
             parser.test.test(fileName)
           );
 

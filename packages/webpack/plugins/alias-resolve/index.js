@@ -1,11 +1,12 @@
 const path = require("path");
 
-const escapeString = (input) =>
-  input.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&").replace(/-/g, "\\x2d");
-
-const createRegExp = (input) => escapeString(input).replace(/\\\*/g, "(\\S*)");
-
-const matchPattern = (pattern, input) => input.match(createRegExp(pattern));
+const matchPattern = (pattern, input) =>
+  input.match(
+    pattern
+      .replace(/[|\\{}()[\]^$+*?.]/g, "\\$&")
+      .replace(/-/g, "\\x2d")
+      .replace(/\\\*/g, "(\\S*)")
+  );
 
 class AliasResolvePlugin {
   constructor(baseUrl, paths) {

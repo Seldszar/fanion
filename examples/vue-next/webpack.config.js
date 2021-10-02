@@ -1,4 +1,4 @@
-const { configure } = require("@spectra/webpack");
+const { configure } = require("@fanion/webpack");
 const { EntryWrapperPlugin } = require("@seldszar/yael");
 
 module.exports = configure({
@@ -9,12 +9,12 @@ module.exports = configure({
     dashboard: {
       source: "src/browser/dashboard/views/*.vue",
       template: "src/browser/dashboard/template.html",
-      presets: [require("@spectra/preset-vue-next")],
+      use: require("@fanion/preset-vue-next"),
     },
     graphics: {
       source: "src/browser/graphics/views/*.vue",
       template: "src/browser/graphics/template.html",
-      presets: [require("@spectra/preset-vue-next")],
+      use: require("@fanion/preset-vue-next"),
     },
   },
   webpack(config, { name }) {

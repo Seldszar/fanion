@@ -6,7 +6,7 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "seldszar/spectra"
+      "repo": "seldszar/fanion"
     }
   ],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {

@@ -6,49 +6,52 @@ const formatString = (input, data) =>
 
 class PagePlugin {
   constructor(options = {}) {
-    this.options = {
-      resourceHandlers: [
-        {
-          test: /\.css$/,
-          handler: (request) => [
-            {
-              tagName: "link",
-              target: "head",
-              attributes: {
-                href: request,
-                rel: "stylesheet",
-              },
+    if (options.resourceHandlers == null) {
+      options.resourceHandlers = [];
+    }
+
+    options.resourceHandlers.push(
+      {
+        test: /\.css$/,
+        handler: (request) => [
+          {
+            tagName: "link",
+            target: "head",
+            attributes: {
+              href: request,
+              rel: "stylesheet",
             },
-          ],
-        },
-        {
-          test: /\.js$/,
-          handler: (request) => [
-            {
-              tagName: "script",
-              target: "body",
-              attributes: {
-                src: request,
-              },
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        handler: (request) => [
+          {
+            tagName: "script",
+            target: "body",
+            attributes: {
+              src: request,
             },
-          ],
-        },
-        {
-          test: /\.mjs$/,
-          handler: (request) => [
-            {
-              tagName: "script",
-              target: "body",
-              attributes: {
-                src: request,
-                type: "module",
-              },
+          },
+        ],
+      },
+      {
+        test: /\.mjs$/,
+        handler: (request) => [
+          {
+            tagName: "script",
+            target: "body",
+            attributes: {
+              src: request,
+              type: "module",
             },
-          ],
-        },
-      ],
-      ...options,
-    };
+          },
+        ],
+      }
+    );
+
+    this.options = options;
   }
 
   apply(compiler) {

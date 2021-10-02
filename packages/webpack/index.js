@@ -9,13 +9,13 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 
 const AliasResolvePlugin = require("./plugins/alias-resolve");
-const DeclarationPlugin = require("./plugins/declaration");
 const EntryPlugin = require("./plugins/entry");
 const PagePlugin = require("./plugins/page");
 const RefreshPlugin = require("./plugins/refresh");
 const TypescriptPlugin = require("./plugins/typescript");
 
 const loadJsonFile = (filePath) => JSON.parse(fs.readFileSync(filePath));
+const castArray = (value) => (Array.isArray(value) ? value : [value]);
 
 exports.configure = (options) => {
   const { dependencies, devDependencies } = loadJsonFile("package.json");
@@ -58,19 +58,19 @@ exports.configure = (options) => {
   };
 
   return (_, argv) => {
+    const result = [];
+
     const isProduction = argv.mode === "production";
     const isWatching = argv.watch;
 
-    const result = [];
+    const variantEntries = Object.entries(options.variants);
 
-    for (const [variantName, variantOptions] of Object.entries(
-      options.variants
-    )) {
+    for (const [variantName, variantOptions] of variantEntries) {
       const config = new Config();
 
       config
         .name(variantName)
-        .context(variantOptions.context)
+        .context(variantOptions.basePath)
         .devtool(isProduction ? "source-map" : "inline-cheap-source-map");
 
       config.performance.set("hints", false);
@@ -215,7 +215,9 @@ exports.configure = (options) => {
         });
 
       if (useTypescript) {
-        config.plugin("typescript-plugin").use(TypescriptPlugin);
+        config
+          .plugin("typescript-plugin")
+          .use(TypescriptPlugin, [variantOptions.typescript || {}]);
 
         config.resolve.extensions.merge([".tsx", ".ts"]);
       }
@@ -308,10 +310,6 @@ exports.configure = (options) => {
               ]);
           }
 
-          if (useTypescript && isProduction) {
-            config.plugin("declaration-plugin").use(DeclarationPlugin);
-          }
-
           break;
         }
       }
@@ -331,11 +329,7 @@ exports.configure = (options) => {
         },
       ]);
 
-      const handlers = [];
-
-      if (variantOptions.presets) {
-        handlers.push(...variantOptions.presets);
-      }
+      const handlers = castArray(variantOptions.use || []);
 
       if (options.webpack) {
         handlers.push(options.webpack);

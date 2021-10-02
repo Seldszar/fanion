@@ -1,7 +1,7 @@
 {
-  "name": "@spectra/preset-react",
+  "name": "@fanion/preset-react",
   "version": "1.0.0",
-  "description": "React preset for Spectra",
+  "description": "React preset for Fanion",
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "license": "MIT",
   "publishConfig": {

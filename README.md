@@ -1,4 +1,4 @@
-# Spectra
+# Fanion
 
 > Yet another opiniated Webpack configuration for NodeCG bundles
 

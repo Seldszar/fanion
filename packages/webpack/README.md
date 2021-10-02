@@ -1,4 +1,4 @@
-# @spectra/webpack
+# @fanion/webpack
 
 > Yet another opiniated Webpack configuration for NodeCG bundles
 
@@ -13,21 +13,58 @@
 # Install
 
 ```bash
-$ npm install @spectra/webpack
+$ npm install @fanion/webpack
 ```
 
 # Usage
 
-Create a new file called `webpack.config.js` and write the following code:
+Create a new file called `webpack.config.js` and write the configuration you need.
+
+Here's an example using Vue.js with the following file structure:
+
+```
+src/
+├── dashboard/
+|   └── views/
+|   |   ├── lorem/
+|   |   |   ├── App.vue
+|   |   |   └── index.ts
+|   |   └── ipsum/
+|   |       ├── App.vue
+|   |       └── index.ts
+|   └── template.html
+├── extension/
+|   └── index.ts
+└── graphics/
+    ├── views/
+    |   ├── lorem/
+    |   |   ├── App.vue
+    |   |   └── index.ts
+    |   └── ipsum/
+    |       ├── App.vue
+    |       └── index.ts
+    └── template.html
+```
 
 ```javascript
-const configure = require('@spectra/webpack');
+const configure = require("@fanion/webpack");
 
 module.exports = configure({
-  /**
-   * Write the variants you want to use in your bundle by following one of the provided examples.
-   * You can even create a custom one based on your needs.
-   */
+  variants: {
+    extension: {
+      source: "src/extension/index.ts",
+    },
+    dashboard: {
+      source: "src/browser/dashboard/views/*/index.ts",
+      template: "src/browser/dashboard/template.html",
+      use: require("@fanion/preset-vue"),
+    },
+    graphics: {
+      source: "src/browser/graphics/views/*/index.ts",
+      template: "src/browser/graphics/template.html",
+      use: require("@fanion/preset-vue"),
+    },
+  },
 });
 ```
 
