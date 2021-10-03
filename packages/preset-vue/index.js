@@ -81,7 +81,7 @@ module.exports = (config) => {
       );
     };
 
-    typescriptPlugin.tap(([options]) => {
+    typescriptPlugin.tap(([options = {}]) => {
       if (options.embeddedParsers == null) {
         options.embeddedParsers = [];
       }
