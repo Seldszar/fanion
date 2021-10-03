@@ -1,6 +1,6 @@
 {
   "name": "@fanion/preset-vue-next",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Vue Next preset for Fanion",
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "license": "MIT",
