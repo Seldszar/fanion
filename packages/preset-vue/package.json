@@ -1,6 +1,6 @@
 {
   "name": "@fanion/preset-vue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Vue preset for Fanion",
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "license": "MIT",
