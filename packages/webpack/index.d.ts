@@ -14,11 +14,6 @@ declare namespace fanion {
    */
   interface VariantOptions {
     /**
-     * Base directory of the variant.
-     */
-    base?: string;
-
-    /**
      * Path patterns used as entries.
      */
     source: string | string[];
