@@ -1,6 +1,6 @@
 {
   "name": "@fanion/preset-react",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React preset for Fanion",
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "license": "MIT",
