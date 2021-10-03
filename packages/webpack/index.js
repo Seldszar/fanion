@@ -70,7 +70,6 @@ module.exports = (options) => {
 
       config
         .name(variantName)
-        .context(path.resolve(variantOptions.base))
         .devtool(isProduction ? "source-map" : "inline-cheap-source-map");
 
       config.performance.set("hints", false);
@@ -269,10 +268,7 @@ module.exports = (options) => {
           `;
 
           if (variantOptions.template) {
-            template = fs.readFileSync(
-              path.resolve(variantOptions.base, variantOptions.template),
-              "utf-8"
-            );
+            template = fs.readFileSync(variantOptions.template, "utf-8");
           }
 
           config.plugin("page-plugin").use(PagePlugin, [

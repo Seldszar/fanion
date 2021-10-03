@@ -215,14 +215,16 @@ class TypescriptPlugin {
   }
 
   parseConfiguration(compiler) {
-    const {
-      options: { basePath = compiler.context },
-    } = this;
-
-    const { config } = ts.readConfigFile(
-      path.resolve(basePath, this.options.configFile),
-      ts.sys.readFile
+    const configFilePath = path.resolve(
+      compiler.context,
+      this.options.configFile
     );
+
+    const { config } = ts.readConfigFile(configFilePath, ts.sys.readFile);
+
+    const {
+      options: { basePath = path.dirname(configFilePath) },
+    } = this;
 
     return ts.parseJsonConfigFileContent(config, ts.sys, basePath);
   }

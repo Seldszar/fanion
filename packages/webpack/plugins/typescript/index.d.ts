@@ -42,6 +42,11 @@ declare namespace TypescriptPlugin {
      * Custom path to the TypeScript configuration file.
      */
     configFile?: string;
+
+    /**
+     * Base path for resolving files specified in `tsconfig.json`.
+     */
+    basePath?: string;
   }
 }
 
