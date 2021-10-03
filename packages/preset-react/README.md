@@ -5,9 +5,9 @@
 ## Usage
 
 ```javascript
-const configure = require("@fanion/webpack");
+const fanion = require("@fanion/webpack");
 
-module.exports = configure({
+module.exports = fanion({
   dashboard: {
     use: require("@fanion/preset-react"),
   },

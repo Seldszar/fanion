@@ -17,7 +17,7 @@ const TypescriptPlugin = require("./plugins/typescript");
 const loadJsonFile = (filePath) => JSON.parse(fs.readFileSync(filePath));
 const castArray = (value) => (Array.isArray(value) ? value : [value]);
 
-exports.configure = (options) => {
+module.exports = (options) => {
   const { dependencies, devDependencies } = loadJsonFile("package.json");
 
   /**
@@ -70,7 +70,7 @@ exports.configure = (options) => {
 
       config
         .name(variantName)
-        .context(variantOptions.basePath)
+        .context(path.resolve(variantOptions.base))
         .devtool(isProduction ? "source-map" : "inline-cheap-source-map");
 
       config.performance.set("hints", false);
@@ -215,10 +215,7 @@ exports.configure = (options) => {
         });
 
       if (useTypescript) {
-        config
-          .plugin("typescript-plugin")
-          .use(TypescriptPlugin, [variantOptions.typescript || {}]);
-
+        config.plugin("typescript-plugin").use(TypescriptPlugin);
         config.resolve.extensions.merge([".tsx", ".ts"]);
       }
 
@@ -272,7 +269,10 @@ exports.configure = (options) => {
           `;
 
           if (variantOptions.template) {
-            template = fs.readFileSync(variantOptions.template, "utf-8");
+            template = fs.readFileSync(
+              path.resolve(variantOptions.base, variantOptions.template),
+              "utf-8"
+            );
           }
 
           config.plugin("page-plugin").use(PagePlugin, [

@@ -1,96 +1,84 @@
 import Config from "webpack-chain";
 import webpack from "webpack";
 
-/**
- * A variant handler.
- * @param config the Webpack configuration
- * @param context the context
- */
-export type VariantHandler = (config: Config, context: VariantContext) => void;
-
-/**
- * TypeScript options.
- */
-export interface TypescriptOptions {
+declare namespace fanion {
   /**
-   * Path to the TypeScript configuration file.
+   * A variant handler.
+   * @param config the Webpack configuration
+   * @param context the context
    */
-  configFile?: string;
-}
-
-/**
- * Variant options.
- */
-export interface VariantOptions {
-  /**
-   * Path patterns used as entries.
-   */
-  source: string | string[];
+  type VariantHandler = (config: Config, context: VariantContext) => void;
 
   /**
-   * Presets applied to the variant Webpack configuration.
+   * Variant options.
    */
-  use?: VariantHandler | VariantHandler[];
+  interface VariantOptions {
+    /**
+     * Base directory of the variant.
+     */
+    base?: string;
+
+    /**
+     * Path patterns used as entries.
+     */
+    source: string | string[];
+
+    /**
+     * Presets applied to the variant Webpack configuration.
+     */
+    use?: VariantHandler | VariantHandler[];
+
+    /**
+     * Path to the HTML template used for generating dahboard and graphics pages.
+     */
+    template?: string;
+  }
 
   /**
-   * The path to the HTML template used for generating dahboard and graphics pages.
+   * Variant context.
    */
-  template?: string;
+  interface VariantContext {
+    /**
+     * The name.
+     */
+    name: string;
+
+    /**
+     * The options.
+     */
+    options: VariantOptions;
+
+    /**
+     * Indicates if the compiler is in production mode.
+     */
+    isProduction: boolean;
+
+    /**
+     * Indicates if the compiler is in watch mode.
+     */
+    isWatching: boolean;
+  }
 
   /**
-   * The base path.
-   * @see https://webpack.js.org/configuration/entry-context/#context
+   * Global options.
    */
-  basePath?: string;
+  interface Options {
+    /**
+     * Variant used by the project.
+     */
+    variants: Record<"dashboard" | "extension" | "graphics", VariantOptions>;
 
-  /**
-   * The TypeScript options.
-   */
-  typescript?: TypescriptOptions;
-}
-
-/**
- * Variant context.
- */
-export interface VariantContext {
-  /**
-   * The name.
-   */
-  name: string;
-
-  /**
-   * The options.
-   */
-  options: VariantOptions;
-
-  /**
-   * Indicates if the compiler is in production mode.
-   */
-  isProduction: boolean;
-
-  /**
-   * Indicates if the compiler is in watch mode.
-   */
-  isWatching: boolean;
-}
-
-/**
- * Global options.
- */
-export interface Options {
-  /**
-   * Variant used by the project.
-   */
-  variants: Record<"dashboard" | "extension" | "graphics", VariantOptions>;
-
-  /**
-   * Function called at the end for updating the variant Webpack configuration.
-   */
-  webpack?: VariantHandler;
+    /**
+     * Function called at the end for updating the variant Webpack configuration.
+     */
+    webpack?: VariantHandler;
+  }
 }
 
 /**
  * Generates a new Webpack configuration.
  * @param options the options
  */
-export function configure(options: Options): () => webpack.Configuration[];
+declare function fanion(options: fanion.Options): () => webpack.Configuration[];
+
+export = fanion;

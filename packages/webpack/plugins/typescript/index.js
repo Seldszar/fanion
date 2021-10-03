@@ -24,8 +24,14 @@ class TypescriptPlugin {
 
     const { fileNames, options } = this.parseConfiguration(compiler);
 
-    options.skipLibCheck = true;
     options.noEmit = true;
+    options.skipLibCheck = true;
+
+    options.sourceMap = false;
+    options.inlineSourceMap = false;
+
+    options.declaration = false;
+    options.declarationMap = false;
 
     const isNormalModule = (input) =>
       input instanceof compiler.webpack.NormalModule;
@@ -209,14 +215,14 @@ class TypescriptPlugin {
   }
 
   parseConfiguration(compiler) {
-    const { config } = ts.readConfigFile(
-      this.options.configFile,
-      ts.sys.readFile
-    );
-
     const {
       options: { basePath = compiler.context },
     } = this;
+
+    const { config } = ts.readConfigFile(
+      path.resolve(basePath, this.options.configFile),
+      ts.sys.readFile
+    );
 
     return ts.parseJsonConfigFileContent(config, ts.sys, basePath);
   }
