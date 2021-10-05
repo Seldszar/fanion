@@ -1,6 +1,6 @@
-const { configure } = require("@fanion/webpack");
+const fanion = require("@fanion/webpack");
 
-module.exports = configure({
+module.exports = fanion({
   variants: {
     extension: {
       source: "src/extension/index.ts",

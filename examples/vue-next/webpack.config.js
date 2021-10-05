@@ -1,7 +1,8 @@
-const { configure } = require("@fanion/webpack");
+const fanion = require("@fanion/webpack");
+
 const { EntryWrapperPlugin } = require("@seldszar/yael");
 
-module.exports = configure({
+module.exports = fanion({
   variants: {
     extension: {
       source: "src/extension/index.ts",

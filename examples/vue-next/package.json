@@ -1,13 +1,13 @@
 {
   "private": true,
   "dependencies": {
-    "@fanion/preset-vue-next": "*",
-    "@fanion/webpack": "*",
     "vue": "^3.1.5",
     "vue-class-component": "^8.0.0-rc.1"
   },
   "devDependencies": {
     "@seldszar/yael": "^2.1.1",
+    "@fanion/preset-vue-next": "*",
+    "@fanion/webpack": "*",
     "@vue/compiler-sfc": "^3.1.5",
     "typescript": "^4.3.5",
     "vue-loader": "^16.3.1",
