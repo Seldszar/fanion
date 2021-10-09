@@ -7,5 +7,15 @@
   "env": {
     "es2020": true,
     "node": true
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended"
+      ]
+    }
+  ]
 }

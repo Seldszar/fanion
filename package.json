@@ -6,19 +6,22 @@
   "scripts": {
     "prepare": "husky install",
     "release": "changeset publish",
-    "test": "eslint ."
+    "test": "eslint --ext .js,.ts ."
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.1",
     "@changesets/cli": "^2.17.0",
     "@commitlint/cli": "^13.2.0",
     "@commitlint/config-conventional": "^13.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.1",
     "lint-staged": "^11.1.2",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
   },
   "commitlint": {
     "extends": [
