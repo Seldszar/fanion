@@ -2,12 +2,35 @@ import Config from "webpack-chain";
 import webpack from "webpack";
 
 declare namespace fanion {
+  type ValueOrArray<T> = T | T[];
+
   /**
    * A variant handler.
    * @param config the Webpack configuration
    * @param context the context
    */
   type VariantHandler = (config: Config, context: VariantContext) => void;
+
+  /**
+   * A preset handler.
+   * @param options the options
+   */
+  type PresetHandler<T = any> = (options: T) => VariantHandler;
+
+  /**
+   * A preset configuration.
+   */
+  interface PresetConfiguration<T = any> {
+    /**
+     * The preset handler.
+     */
+    preset: PresetHandler<T>;
+
+    /**
+     * The preset options.
+     */
+    options: T;
+  }
 
   /**
    * Variant options.
@@ -21,16 +44,16 @@ declare namespace fanion {
     /**
      * Presets applied to the variant Webpack configuration.
      */
-    use?: VariantHandler | VariantHandler[];
+    use?: ValueOrArray<PresetHandler | PresetConfiguration>;
 
     /**
-     * Path to the HTML template used for generating dahboard and graphics pages.
+     * Path to the HTML template used for generating view pages.
      */
     template?: string;
   }
 
   /**
-   * Variant context.
+   * A variant context.
    */
   interface VariantContext {
     /**

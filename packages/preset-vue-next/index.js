@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const { VueLoaderPlugin } = require("vue-loader");
 
-module.exports = (config) => {
+module.exports = () => (config) => {
   const babelRule = config.module.rule("babel");
   const vueRule = config.module.rule("vue");
 

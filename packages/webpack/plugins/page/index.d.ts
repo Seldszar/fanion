@@ -25,6 +25,12 @@ declare namespace PagePlugin {
     hash: boolean;
   }
 
+  /**
+   * A page handler
+   * @param entryNames list of the entry names provided by the Webpack configuration
+   */
+  type PageHandler = (entryNames: string[]) => Promise<PageDescriptor[]>;
+
   interface ResourceDescriptor {
     /**
      * Tag name fo the resource.
@@ -59,7 +65,7 @@ declare namespace PagePlugin {
     /**
      * A single or collection of pages to generate.
      */
-    pages: PageDescriptor | PageDescriptor[] | ((entryNames: string[]) => Promise<PageDescriptor[]>);
+    pages: PageDescriptor | PageDescriptor[] | PageHandler;
 
     /**
      * A collection of custom resource handlers used for including additional tags to the page.

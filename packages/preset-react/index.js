@@ -1,16 +1,19 @@
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
-module.exports = (config, context) => {
+module.exports = (options) => (config, context) => {
   const babelRule = config.module.rule("babel");
 
-  babelRule.use("babel-loader").tap((options) => {
-    options.presets.push(require.resolve("@babel/preset-react"));
+  babelRule.use("babel-loader").tap((loaderOptions) => {
+    loaderOptions.presets.push([
+      require.resolve("@babel/preset-react"),
+      options,
+    ]);
 
     if (context.isWatching) {
-      options.plugins.push(require.resolve("react-refresh/babel"));
+      loaderOptions.plugins.push(require.resolve("react-refresh/babel"));
     }
 
-    return options;
+    return loaderOptions;
   });
 
   if (context.isWatching) {

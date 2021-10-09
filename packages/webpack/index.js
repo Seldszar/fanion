@@ -325,7 +325,18 @@ module.exports = (options) => {
         },
       ]);
 
-      const handlers = castArray(variantOptions.use || []);
+      const handlers = castArray(variantOptions.use || []).map((value) => {
+        switch (typeof value) {
+          case "function":
+            return value({});
+
+          case "object":
+            return value.preset(value.options || {});
+
+          default:
+            throw new RangeError("Unknown preset format");
+        }
+      });
 
       if (options.webpack) {
         handlers.push(options.webpack);

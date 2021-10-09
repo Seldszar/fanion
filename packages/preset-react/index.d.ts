@@ -1,3 +1,3 @@
-import { VariantHandler } from "@fanion/webpack";
+import { PresetHandler } from "@fanion/webpack";
 
-export = VariantHandler;
+export = PresetHandler;
