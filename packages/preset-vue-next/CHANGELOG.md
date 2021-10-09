@@ -1,5 +1,11 @@
 # @fanion/preset-vue-next
 
+## 1.2.0
+
+### Minor Changes
+
+- [`f2ce27b`](https://github.com/Seldszar/fanion/commit/f2ce27bf8750657cf7225df7e1513e7255d52a1e) Thanks [@Seldszar](https://github.com/Seldszar)! - Updated the preset format to handle custom options
+
 ## 1.1.1
 
 ### Patch Changes
