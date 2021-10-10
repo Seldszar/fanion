@@ -29,7 +29,27 @@ declare namespace fanion {
     /**
      * The preset options.
      */
-    options: T;
+    options?: T;
+  }
+
+  /**
+   * A Babel configuration.
+   */
+  interface BabelConfiguration {
+    /**
+     * Path to the configuration file.
+     */
+    configFile?: string;
+  }
+
+  /**
+   * A TypeScript configuration.
+   */
+  interface TypeScriptConfiguration {
+    /**
+     * Path to the configuration file.
+     */
+    configFile?: string;
   }
 
   /**
@@ -50,6 +70,16 @@ declare namespace fanion {
      * Path to the HTML template used for generating view pages.
      */
     template?: string;
+
+    /**
+     * The Babel configuration.
+     */
+    babel?: BabelConfiguration;
+
+    /**
+     * The TypeScript configuration.
+     */
+    typescript?: TypeScriptConfiguration;
   }
 
   /**

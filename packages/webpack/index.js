@@ -1,3 +1,4 @@
+const dotProp = require("dot-prop");
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
@@ -169,6 +170,7 @@ module.exports = (options) => {
         .options({
           cacheDirectory: true,
           cacheCompression: false,
+          configFile: dotProp.get(variantOptions, "babel.configFile"),
           plugins: [
             [
               "@babel/plugin-proposal-decorators",
@@ -214,7 +216,12 @@ module.exports = (options) => {
         });
 
       if (useTypescript) {
-        config.plugin("typescript-plugin").use(TypescriptPlugin);
+        config.plugin("typescript-plugin").use(TypescriptPlugin, [
+          {
+            configFile: dotProp.get(variantOptions, "typescript.configFile"),
+          },
+        ]);
+
         config.resolve.extensions.merge([".tsx", ".ts"]);
       }
 

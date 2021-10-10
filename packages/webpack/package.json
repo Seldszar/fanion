@@ -22,6 +22,7 @@
     "@babel/runtime": "^7.15.3",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
+    "dot-prop": "^6.0.1",
     "fast-glob": "^3.2.7",
     "jsdom": "^18.0.0",
     "mini-css-extract-plugin": "^2.3.0",
