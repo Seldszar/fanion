@@ -1,6 +1,6 @@
 {
   "name": "@fanion/webpack",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Yet another opiniated Webpack configuration for NodeCG bundles",
   "author": "Alexandre Breteau <contact@seldszar.fr> (https://seldszar.fr)",
   "license": "MIT",

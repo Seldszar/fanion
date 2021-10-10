@@ -1,5 +1,13 @@
 # @fanion/webpack
 
+## 1.3.0
+
+### Minor Changes
+
+- [`3fca891`](https://github.com/Seldszar/fanion/commit/3fca8910ad1b51fac68fb82009f59c1b5f408116) Thanks [@Seldszar](https://github.com/Seldszar)! - Added TypeScript & Babel configuration file customization.
+
+* [`c816093`](https://github.com/Seldszar/fanion/commit/c8160932fcda2702645fdd06d9d637944259d372) Thanks [@Seldszar](https://github.com/Seldszar)! - Normalized the plugin options.
+
 ## 1.2.0
 
 ### Minor Changes
