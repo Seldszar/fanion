@@ -4,11 +4,8 @@ const servers = new Map();
 
 class RefreshPlugin {
   constructor(options = {}) {
-    this.options = {
-      address: "0.0.0.0",
-      port: 45678,
-      ...options,
-    };
+    this.address = options.address || "0.0.0.0";
+    this.port = options.port || 45678;
   }
 
   apply(compiler) {
@@ -41,16 +38,16 @@ class RefreshPlugin {
 
     compiler.hooks.watchRun.tap("RefreshPlugin", () => {
       const key = JSON.stringify({
-        address: this.options.address,
-        port: this.options.port,
+        address: this.address,
+        port: this.port,
       });
 
       let server = servers.get(key);
 
       if (!server) {
         const serverOptions = {
-          host: this.options.address,
-          port: this.options.port,
+          host: this.address,
+          port: this.port,
         };
 
         server = new ws.Server(serverOptions, () => {
@@ -96,11 +93,11 @@ class RefreshPlugin {
   getClientOptions(compiler) {
     const clientOptions = {
       name: compiler.options.name,
-      port: this.options.port,
+      port: this.port,
     };
 
-    if (this.options.address !== "0.0.0.0") {
-      clientOptions.address = this.options.address;
+    if (this.address !== "0.0.0.0") {
+      clientOptions.address = this.address;
     }
 
     return clientOptions;

@@ -10,11 +10,9 @@ const diagnosticHost = {
 
 class TypescriptPlugin {
   constructor(options = {}) {
-    this.options = {
-      configFile: "tsconfig.json",
-      embeddedParsers: [],
-      ...options,
-    };
+    this.configFile = options.configFile || "tsconfig.json";
+    this.embeddedParsers = options.embeddedParsers || [];
+    this.basePath = options.basePath;
   }
 
   apply(compiler) {
@@ -79,7 +77,7 @@ class TypescriptPlugin {
         let source = embeddedSources.get(fileName);
 
         if (typeof source === "undefined") {
-          const parser = this.options.embeddedParsers.find((parser) =>
+          const parser = this.embeddedParsers.find((parser) =>
             parser.test.test(fileName)
           );
 
@@ -215,18 +213,12 @@ class TypescriptPlugin {
   }
 
   parseConfiguration(compiler) {
-    const configFilePath = path.resolve(
-      compiler.context,
-      this.options.configFile
-    );
+    const configFilePath = path.resolve(compiler.context, this.configFile);
+    const result = ts.readConfigFile(configFilePath, ts.sys.readFile);
 
-    const { config } = ts.readConfigFile(configFilePath, ts.sys.readFile);
+    const { basePath = path.dirname(configFilePath) } = this;
 
-    const {
-      options: { basePath = path.dirname(configFilePath) },
-    } = this;
-
-    return ts.parseJsonConfigFileContent(config, ts.sys, basePath);
+    return ts.parseJsonConfigFileContent(result.config, ts.sys, basePath);
   }
 }
 

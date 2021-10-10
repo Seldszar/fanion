@@ -6,11 +6,10 @@ const formatString = (input, data) =>
 
 class PagePlugin {
   constructor(options = {}) {
-    if (options.resourceHandlers == null) {
-      options.resourceHandlers = [];
-    }
+    this.pages = options.pages || {};
+    this.resourceHandlers = options.resourceHandlers || [];
 
-    options.resourceHandlers.push(
+    this.resourceHandlers.push(
       {
         test: /\.css$/,
         handler: (request) => [
@@ -50,8 +49,6 @@ class PagePlugin {
         ],
       }
     );
-
-    this.options = options;
   }
 
   apply(compiler) {
@@ -59,9 +56,7 @@ class PagePlugin {
       compilation.hooks.additionalAssets.tap("PagePlugin", async () => {
         const entryNames = [...compilation.entrypoints.keys()];
 
-        let {
-          options: { pages },
-        } = this;
+        let { pages } = this;
 
         if (typeof pages === "function") {
           pages = await pages(entryNames);
@@ -71,7 +66,6 @@ class PagePlugin {
           pages = {
             filename: "[name].html",
             entrypoints: ["[name]"],
-            hash: false,
             ...pages,
           };
 
@@ -105,10 +99,6 @@ class PagePlugin {
   getPageResources(compilation, page) {
     const resources = [];
 
-    const {
-      options: { resourceHandlers },
-    } = this;
-
     page.entrypoints.forEach((name) => {
       const entrypoint = compilation.entrypoints.get(name);
 
@@ -118,7 +108,7 @@ class PagePlugin {
 
       entrypoint.chunks.forEach((chunk) => {
         const handleFile = (file) => {
-          const resourceHandler = resourceHandlers.find(({ test }) =>
+          const resourceHandler = this.resourceHandlers.find(({ test }) =>
             test.test(file)
           );
 

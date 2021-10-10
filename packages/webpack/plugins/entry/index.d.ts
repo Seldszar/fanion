@@ -8,6 +8,11 @@ declare namespace EntryPlugin {
 
   interface Options {
     /**
+     * Patterns for resolving the entry files.
+     */
+    source: string | string[];
+
+    /**
      * Formats the entry.
      * @param name the entry name
      * @param entry path to the entry file
@@ -19,10 +24,9 @@ declare namespace EntryPlugin {
 declare class EntryPlugin {
   /**
    * Creates a new entry plugin.
-   * @param source patterns for resolving the entry files
    * @param options the plugin options
    */
-  constructor(source: string | string[], options: EntryPlugin.Options);
+  constructor(options: EntryPlugin.Options);
 
   /**
    * Applies the plugin to the compiler.

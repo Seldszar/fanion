@@ -133,10 +133,7 @@ module.exports = (options) => {
 
         config.resolve
           .plugin("jsconfig-alias-resolve-plugin")
-          .use(AliasResolvePlugin, [
-            compilerOptions.baseUrl,
-            compilerOptions.paths,
-          ]);
+          .use(AliasResolvePlugin, [compilerOptions]);
       } catch {} // eslint-disable-line no-empty
 
       try {
@@ -144,10 +141,7 @@ module.exports = (options) => {
 
         config.resolve
           .plugin("tsconfig-alias-resolve-plugin")
-          .use(AliasResolvePlugin, [
-            compilerOptions.baseUrl,
-            compilerOptions.paths,
-          ]);
+          .use(AliasResolvePlugin, [compilerOptions]);
       } catch {} // eslint-disable-line no-empty
 
       const babelRule = config.module.rule("babel");
@@ -318,8 +312,8 @@ module.exports = (options) => {
       }
 
       config.plugin("entry-plugin").use(EntryPlugin, [
-        variantOptions.source,
         {
+          source: variantOptions.source,
           format(name, entry) {
             entry = [entry];
 

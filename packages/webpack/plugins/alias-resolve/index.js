@@ -9,9 +9,9 @@ const matchPattern = (pattern, input) =>
   );
 
 class AliasResolvePlugin {
-  constructor(baseUrl, paths) {
-    this.baseUrl = baseUrl || ".";
-    this.paths = paths || {};
+  constructor(options = {}) {
+    this.baseUrl = options.baseUrl || ".";
+    this.paths = options.paths || {};
   }
 
   apply(resolver) {

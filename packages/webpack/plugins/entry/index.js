@@ -48,11 +48,11 @@ function getCompilerTasks(compiler, tasks) {
 }
 
 class EntryPlugin {
-  constructor(source, options = {}) {
-    this.source = source;
-    this.options = options;
+  constructor(options = {}) {
+    this.source = options.source;
+    this.format = options.format;
 
-    this.tasks = fg.generateTasks(source);
+    this.tasks = fg.generateTasks(this.source);
   }
 
   apply(compiler) {
@@ -92,8 +92,8 @@ class EntryPlugin {
               entry = `./${entry}`;
             }
 
-            if ("format" in this.options) {
-              [name, entry] = this.options.format(name, entry);
+            if (this.format) {
+              [name, entry] = this.format(name, entry);
             }
 
             managedEntries.add((result[name] = normalizeEntryOptions(entry)));
