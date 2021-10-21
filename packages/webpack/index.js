@@ -75,10 +75,7 @@ module.exports = (options) => {
 
       config.performance.set("hints", false);
 
-      config.output
-        .path(path.resolve(variantName))
-        .set("clean", isProduction)
-        .publicPath("");
+      config.output.path(path.resolve(variantName)).set("clean", isProduction);
 
       config.resolve.extensions.merge([
         ".wasm",
