@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.3.1
+
+### Patch Changes
+
+- [`da6c467`](https://github.com/Seldszar/fanion/commit/da6c467b2a12c89e3ff2f01573550e25faf30d54) Thanks [@Seldszar](https://github.com/Seldszar)! - Removed custom `publicPath` from the default Webpack configuration in order to properly resolve relative paths.
+
 ## 1.3.0
 
 ### Minor Changes
