@@ -1,4 +1,5 @@
 const path = require("path");
+const util = require("util");
 
 const matchPattern = (pattern, input) =>
   input.match(
@@ -18,6 +19,8 @@ class AliasResolvePlugin {
     const target = resolver.ensureHook("resolve");
     const hook = resolver.getHook("described-resolve");
 
+    const doResolve = util.promisify(resolver.doResolve.bind(resolver, target));
+
     hook.tapPromise("AliasResolvePlugin", async (request, resolveContext) => {
       const { request: moduleName } = request;
 
@@ -34,31 +37,19 @@ class AliasResolvePlugin {
 
         for (const prefixPath of prefixPaths) {
           const matchedPath = prefixPath.replace("*", matches[1]);
-          const candidate = path.resolve(
-            request.descriptionFileRoot,
-            this.baseUrl,
-            matchedPath
-          );
+          const candidate = path.join(this.baseUrl, matchedPath);
 
-          const [error, result] = await new Promise((resolve) => {
-            const object = { ...request, request: candidate };
-            const message = `aliased with mapping '${prefix}': '${moduleName}' to '${candidate}'`;
-            const callback = (error, result) => resolve([error, result]);
-
-            resolver.doResolve(
-              target,
-              object,
-              message,
-              resolveContext,
-              callback
+          try {
+            const result = await doResolve(
+              { ...request, request: candidate },
+              `aliased with mapping '${prefix}': '${moduleName}' to '${candidate}'`,
+              resolveContext
             );
-          });
 
-          if (error || result == null) {
-            continue;
-          }
-
-          return result;
+            if (result) {
+              return result;
+            }
+          } catch {} // eslint-disable-line no-empty
         }
       }
     });

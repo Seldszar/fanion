@@ -126,19 +126,16 @@ module.exports = (options) => {
         ]);
 
       try {
-        const { compilerOptions } = loadJsonFile("jsconfig.json");
+        const { compilerOptions: options } = loadJsonFile("jsconfig.json");
 
         config.resolve
           .plugin("jsconfig-alias-resolve-plugin")
-          .use(AliasResolvePlugin, [compilerOptions]);
-      } catch {} // eslint-disable-line no-empty
-
-      try {
-        const { compilerOptions } = loadJsonFile("tsconfig.json");
-
-        config.resolve
-          .plugin("tsconfig-alias-resolve-plugin")
-          .use(AliasResolvePlugin, [compilerOptions]);
+          .use(AliasResolvePlugin, [
+            {
+              baseUrl: path.resolve(options.baseUrl || "."),
+              paths: options.paths,
+            },
+          ]);
       } catch {} // eslint-disable-line no-empty
 
       const babelRule = config.module.rule("babel");
@@ -207,11 +204,28 @@ module.exports = (options) => {
         });
 
       if (useTypescript) {
-        config.plugin("typescript-plugin").use(TypescriptPlugin, [
-          {
-            configFile: dotProp.get(variantOptions, "typescript.configFile"),
-          },
-        ]);
+        const configFile = path.resolve(
+          dotProp.get(variantOptions, "typescript.configFile", "tsconfig.json")
+        );
+
+        const result = TypescriptPlugin.parseConfigFile(configFile);
+
+        if (result) {
+          const { basePath, options } = result;
+
+          config.resolve
+            .plugin("tsconfig-alias-resolve-plugin")
+            .use(AliasResolvePlugin, [
+              {
+                baseUrl: path.resolve(basePath, options.baseUrl || "."),
+                paths: options.paths,
+              },
+            ]);
+        }
+
+        config
+          .plugin("typescript-plugin")
+          .use(TypescriptPlugin, [{ configFile }]);
 
         config.resolve.extensions.merge([".tsx", ".ts"]);
       }

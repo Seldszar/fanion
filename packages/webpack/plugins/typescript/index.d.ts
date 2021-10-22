@@ -34,19 +34,14 @@ declare namespace TypescriptPlugin {
 
   interface Options {
     /**
-     * A collection of embedded parsers.
-     */
-    embeddedParsers?: EmbeddedParser[];
-
-    /**
      * Custom path to the TypeScript configuration file.
      */
     configFile?: string;
 
     /**
-     * Base path for resolving files specified in `tsconfig.json`.
+     * A collection of embedded parsers.
      */
-    basePath?: string;
+    embeddedParsers?: EmbeddedParser[];
   }
 }
 

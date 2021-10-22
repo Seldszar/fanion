@@ -12,7 +12,6 @@ class TypescriptPlugin {
   constructor(options = {}) {
     this.configFile = options.configFile || "tsconfig.json";
     this.embeddedParsers = options.embeddedParsers || [];
-    this.basePath = options.basePath;
   }
 
   apply(compiler) {
@@ -20,7 +19,15 @@ class TypescriptPlugin {
       return;
     }
 
-    const { fileNames, options } = this.parseConfiguration(compiler);
+    const result = TypescriptPlugin.parseConfigFile(
+      path.resolve(this.configFile)
+    );
+
+    if (result == null) {
+      return;
+    }
+
+    const { fileNames, options } = result;
 
     options.noEmit = true;
     options.skipLibCheck = true;
@@ -112,12 +119,10 @@ class TypescriptPlugin {
       };
 
       const addEntryFile = (fileName) => {
-        if (fileName.endsWith(".vue")) {
-          const embeddedSource = getEmbeddedSource(fileName);
+        const embeddedSource = getEmbeddedSource(fileName);
 
-          if (embeddedSource) {
-            entryFiles.add(`${fileName}${embeddedSource.extension}`);
-          }
+        if (embeddedSource) {
+          entryFiles.add(`${fileName}${embeddedSource.extension}`);
         }
 
         if (fileName.endsWith(".ts") || fileName.endsWith(".tsx")) {
@@ -212,13 +217,17 @@ class TypescriptPlugin {
     });
   }
 
-  parseConfiguration(compiler) {
-    const configFilePath = path.resolve(compiler.context, this.configFile);
-    const result = ts.readConfigFile(configFilePath, ts.sys.readFile);
+  static parseConfigFile(configFile, basePath = path.dirname(configFile)) {
+    const { config } = ts.readConfigFile(configFile, ts.sys.readFile);
 
-    const { basePath = path.dirname(configFilePath) } = this;
+    if (config == null) {
+      return null;
+    }
 
-    return ts.parseJsonConfigFileContent(result.config, ts.sys, basePath);
+    return {
+      ...ts.parseJsonConfigFileContent(config, ts.sys, basePath),
+      basePath,
+    };
   }
 }
 
