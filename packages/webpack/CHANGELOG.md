@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.0
+
+### Minor Changes
+
+- [`17a5ca7`](https://github.com/Seldszar/fanion/commit/17a5ca7c1973b3116a16a6b882c26b5e95b39be9) Thanks [@Seldszar](https://github.com/Seldszar)! - Updated the TypeScript plugin to ignore if the configuration file hasn't been successfully resolved, and refactored the alias resolve plugin to use the resolved base URL instead.
+
 ## 1.3.1
 
 ### Patch Changes
