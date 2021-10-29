@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.1
+
+### Patch Changes
+
+- [`30c698c`](https://github.com/Seldszar/fanion/commit/30c698c7924a58f9345f227ceabf73a6d5273763) Thanks [@Seldszar](https://github.com/Seldszar)! - Changed the development source maps for producing better ones.
+
 ## 1.4.0
 
 ### Minor Changes
