@@ -71,7 +71,7 @@ module.exports = (options) => {
 
       config
         .name(variantName)
-        .devtool(isProduction ? "source-map" : "inline-cheap-source-map");
+        .devtool(isProduction ? "source-map" : "eval-source-map");
 
       config.performance.set("hints", false);
 
