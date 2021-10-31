@@ -306,7 +306,7 @@ module.exports = (options) => {
             type: "commonjs2",
           });
 
-          if (config.get("devtool")) {
+          if (config.get("devtool") && "source-map-support" in dependencies) {
             config
               .plugin("source-map-banner-plugin")
               .use(webpack.BannerPlugin, [
