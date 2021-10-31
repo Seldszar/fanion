@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.2
+
+### Patch Changes
+
+- [`3ce218c`](https://github.com/Seldszar/fanion/commit/3ce218c15f28e3081be041a53ee01944fc2963ad) Thanks [@Seldszar](https://github.com/Seldszar)! - Apply the `source-map-support` banner only if the package is included as production dependency.
+
 ## 1.4.1
 
 ### Patch Changes
