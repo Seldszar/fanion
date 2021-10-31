@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.4
+
+### Patch Changes
+
+- [`293b4e9`](https://github.com/Seldszar/fanion/commit/293b4e99431d25947bf71554aa27e63040c4dd2e) Thanks [@Seldszar](https://github.com/Seldszar)! - Removed `source-map-support` from Webpack configuration, and tweaked the default Babel configuration.
+
 ## 1.4.3
 
 ### Patch Changes
