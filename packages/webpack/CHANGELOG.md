@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.3
+
+### Patch Changes
+
+- [`e8f072c`](https://github.com/Seldszar/fanion/commit/e8f072cb042831c3d3f277596bcd959974697398) Thanks [@Seldszar](https://github.com/Seldszar)! - Updated the Webpack Node.js externals to bundle default dependencies if they aren't defined in `package.json`.
+
 ## 1.4.2
 
 ### Patch Changes
