@@ -29,7 +29,6 @@
     "node-polyfill-webpack-plugin": "^1.1.4",
     "postcss-loader": "^6.2.0",
     "sass-loader": "^12.2.0",
-    "source-map-support": "^0.5.20",
     "terser-webpack-plugin": "^5.2.4",
     "thread-loader": "^3.0.4",
     "webpack-chain": "^6.5.1",

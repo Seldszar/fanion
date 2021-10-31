@@ -1,7 +1,6 @@
 const dotProp = require("dot-prop");
 const fs = require("fs");
 const path = require("path");
-const webpack = require("webpack");
 const Config = require("webpack-chain");
 const nodeExternals = require("webpack-node-externals");
 
@@ -159,6 +158,9 @@ module.exports = (options) => {
           cacheDirectory: true,
           cacheCompression: false,
           configFile: dotProp.get(variantOptions, "babel.configFile"),
+          assumptions: {
+            setPublicClassFields: true,
+          },
           plugins: [
             [
               "@babel/plugin-proposal-decorators",
@@ -166,20 +168,8 @@ module.exports = (options) => {
                 legacy: true,
               },
             ],
-            [
-              "@babel/plugin-proposal-class-properties",
-              {
-                loose: false,
-              },
-            ],
-            [
-              "@babel/plugin-transform-runtime",
-              {
-                corejs: false,
-                helpers: true,
-                regenerator: true,
-              },
-            ],
+            "@babel/plugin-proposal-class-properties",
+            "@babel/plugin-transform-runtime",
           ],
           presets: [
             [
@@ -300,7 +290,13 @@ module.exports = (options) => {
         }
 
         case "extension": {
-          config.target("node").externals(
+          config.target("node");
+
+          config.set("externalsPresets", {
+            node: true,
+          });
+
+          config.externals(
             nodeExternals({
               modulesFromFile: true,
             })
@@ -309,18 +305,6 @@ module.exports = (options) => {
           config.output.set("library", {
             type: "commonjs2",
           });
-
-          if (config.get("devtool")) {
-            config
-              .plugin("source-map-banner-plugin")
-              .use(webpack.BannerPlugin, [
-                {
-                  banner: `require("source-map-support/register");`,
-                  entryOnly: true,
-                  raw: true,
-                },
-              ]);
-          }
 
           break;
         }
@@ -332,8 +316,14 @@ module.exports = (options) => {
           format(name, entry) {
             entry = [entry];
 
-            if (config.get("target") === "web" && isWatching) {
-              entry.unshift(require.resolve("./plugins/refresh/client"));
+            switch (config.get("target")) {
+              case "web": {
+                if (isWatching) {
+                  entry.unshift(require.resolve("./plugins/refresh/client"));
+                }
+
+                break;
+              }
             }
 
             return [name, entry];
