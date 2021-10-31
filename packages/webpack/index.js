@@ -300,13 +300,17 @@ module.exports = (options) => {
         }
 
         case "extension": {
-          config.target("node").externals(nodeExternals());
+          config.target("node").externals(
+            nodeExternals({
+              modulesFromFile: true,
+            })
+          );
 
           config.output.set("library", {
             type: "commonjs2",
           });
 
-          if (config.get("devtool") && "source-map-support" in dependencies) {
+          if (config.get("devtool")) {
             config
               .plugin("source-map-banner-plugin")
               .use(webpack.BannerPlugin, [
