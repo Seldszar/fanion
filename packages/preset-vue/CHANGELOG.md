@@ -1,5 +1,11 @@
 # @fanion/preset-vue
 
+## 1.2.1
+
+### Patch Changes
+
+- [`d24691e`](https://github.com/Seldszar/fanion/commit/d24691ec35a2cd34fdd51694d749e32481ecb41a) Thanks [@Seldszar](https://github.com/Seldszar)! - Vue.js template compilers are now peer dependencies to prevent future version conflicts.
+
 ## 1.2.0
 
 ### Minor Changes
