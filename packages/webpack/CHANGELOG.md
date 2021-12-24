@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.5
+
+### Patch Changes
+
+- [`cac8de1`](https://github.com/Seldszar/fanion/commit/cac8de1c92b039c09639bf8186450fa1369275ea) Thanks [@Seldszar](https://github.com/Seldszar)! - Babel config file's path is now being resolved.
+
 ## 1.4.4
 
 ### Patch Changes
