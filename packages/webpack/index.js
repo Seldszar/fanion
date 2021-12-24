@@ -151,13 +151,19 @@ module.exports = (options) => {
           poolTimeout: isWatching ? Infinity : 500,
         });
 
+      let configFile = dotProp.get(variantOptions, "babel.configFile");
+
+      if (configFile) {
+        configFile = path.resolve(configFile);
+      }
+
       babelRule
         .use("babel-loader")
         .loader(require.resolve("babel-loader"))
         .options({
+          configFile,
           cacheDirectory: true,
           cacheCompression: false,
-          configFile: dotProp.get(variantOptions, "babel.configFile"),
           assumptions: {
             setPublicClassFields: true,
           },
