@@ -38,9 +38,7 @@ module.exports = () => (config) => {
     return options;
   });
 
-  const typescriptPlugin = config.plugin("typescript-plugin");
-
-  if (typescriptPlugin) {
+  if (config.plugins.has("typescript-plugin")) {
     const ts = require("typescript");
 
     const getExtensionByLang = (lang) => {
@@ -81,7 +79,7 @@ module.exports = () => (config) => {
       );
     };
 
-    typescriptPlugin.tap(([options = {}]) => {
+    config.plugin("typescript-plugin").tap(([options = {}]) => {
       if (options.embeddedParsers == null) {
         options.embeddedParsers = [];
       }
