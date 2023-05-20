@@ -219,9 +219,11 @@ module.exports = (options) => {
             ]);
         }
 
-        config
-          .plugin("typescript-plugin")
-          .use(TypescriptPlugin, [{ configFile }]);
+        if (isProduction) {
+          config
+            .plugin("typescript-plugin")
+            .use(TypescriptPlugin, [{ configFile }]);
+        }
 
         config.resolve.extensions.merge([".tsx", ".ts"]);
       }
