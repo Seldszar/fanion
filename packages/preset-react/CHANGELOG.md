@@ -1,5 +1,13 @@
 # @fanion/preset-react
 
+## 1.2.1
+
+### Patch Changes
+
+- [`70ef7c4`](https://github.com/Seldszar/fanion/commit/70ef7c43c32dc03678f61d5c4319654c33b8748b) Thanks [@Seldszar](https://github.com/Seldszar)! - Only tap TypeScript plugin if enabled.
+
+- [`5611704`](https://github.com/Seldszar/fanion/commit/561170439b674850427c34d39353b5065aa384bf) Thanks [@Seldszar](https://github.com/Seldszar)! - Upgrade package dependencies.
+
 ## 1.2.0
 
 ### Minor Changes

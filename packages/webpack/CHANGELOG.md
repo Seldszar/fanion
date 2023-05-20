@@ -1,5 +1,15 @@
 # @fanion/webpack
 
+## 1.4.6
+
+### Patch Changes
+
+- [`70ef7c4`](https://github.com/Seldszar/fanion/commit/70ef7c43c32dc03678f61d5c4319654c33b8748b) Thanks [@Seldszar](https://github.com/Seldszar)! - Only tap TypeScript plugin if enabled.
+
+- [`5611704`](https://github.com/Seldszar/fanion/commit/561170439b674850427c34d39353b5065aa384bf) Thanks [@Seldszar](https://github.com/Seldszar)! - Upgrade package dependencies.
+
+- [`ed4275c`](https://github.com/Seldszar/fanion/commit/ed4275ca4216a85b7559b71a011cf2be714d86b5) Thanks [@Seldszar](https://github.com/Seldszar)! - Only TypeScript check on production build
+
 ## 1.4.5
 
 ### Patch Changes
