@@ -1,5 +1,11 @@
 # @fanion/webpack
 
+## 1.4.7
+
+### Patch Changes
+
+- [`79641d2`](https://github.com/Seldszar/fanion/commit/79641d2d02f2cdd37eff2e775d90fb9c1d2a429c) Thanks [@Seldszar](https://github.com/Seldszar)! - Downgrade the `dot-prop` version to make it compatible with CommonJS.
+
 ## 1.4.6
 
 ### Patch Changes
