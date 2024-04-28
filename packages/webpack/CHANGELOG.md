@@ -1,5 +1,13 @@
 # @fanion/webpack
 
+## 1.4.8
+
+### Patch Changes
+
+- [`ccfdcf60ccb9d923fc97ed2993df7a006a6c5cf2`](https://github.com/Seldszar/fanion/commit/ccfdcf60ccb9d923fc97ed2993df7a006a6c5cf2) Thanks [@Seldszar](https://github.com/Seldszar)! - TypeScript declare field support
+
+- [`bf34f458609ea73b98a158a33a2e54fa6a8cf1d8`](https://github.com/Seldszar/fanion/commit/bf34f458609ea73b98a158a33a2e54fa6a8cf1d8) Thanks [@Seldszar](https://github.com/Seldszar)! - Upgrade dependencies & replace `@babel/plugin-proposal-class-properties` by `@babel/plugin-transform-class-properties`
+
 ## 1.4.7
 
 ### Patch Changes
