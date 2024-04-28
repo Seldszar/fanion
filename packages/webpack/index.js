@@ -169,6 +169,12 @@ module.exports = (options) => {
           },
           plugins: [
             [
+              "@babel/plugin-transform-typescript",
+              {
+                allowDeclareFields: true,
+              },
+            ],
+            [
               "@babel/plugin-proposal-decorators",
               {
                 legacy: true,
@@ -179,6 +185,14 @@ module.exports = (options) => {
           ],
           presets: [
             [
+              "@babel/preset-typescript",
+              {
+                optimizeConstEnums: true,
+                allExtensions: true,
+                isTSX: true,
+              },
+            ],
+            [
               "@babel/preset-env",
               {
                 targets: variantName === "extension" ? "node 12" : "chrome 75",
@@ -186,14 +200,6 @@ module.exports = (options) => {
                   "@babel/plugin-proposal-optional-chaining",
                   "@babel/plugin-proposal-nullish-coalescing-operator",
                 ],
-              },
-            ],
-            [
-              "@babel/preset-typescript",
-              {
-                optimizeConstEnums: true,
-                allExtensions: true,
-                isTSX: true,
               },
             ],
           ],
